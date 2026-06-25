@@ -1,10 +1,17 @@
-import streamlit as st
-import pandas as pd
+import streamlit as st  # type: ignore[import]
+import pandas as pd  # type: ignore[import]
 import pickle
+import os
 
 # Load model and columns
-model = pickle.load(open("model.pkl", "rb"))
-model_columns = pickle.load(open("model_columns.pkl", "rb"))
+base_dir = os.path.dirname(__file__)
+model_path = os.path.join(base_dir, "model.pkl")
+columns_path = os.path.join(base_dir, "model_columns.pkl")
+
+with open(model_path, "rb") as model_file:
+    model = pickle.load(model_file)
+with open(columns_path, "rb") as columns_file:
+    model_columns = pickle.load(columns_file)
 
 st.title("Luxury Watch Price Estimator")
 st.write("Enter watch details below to get a predicted market value.")
